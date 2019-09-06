@@ -1,0 +1,52 @@
+{
+    "nodes": [
+        {
+            "id" : "start",
+            "label" : "start",
+            "x" : 0,
+            "y" : 0,
+            "size" : 0
+        },
+        {
+            "id" : "A",
+            "label" : "A",
+            "x" : 1,
+            "y" : 0,
+            "size" : 5
+        },
+        {
+            "id" : "B",
+            "label" : "B",
+            "x" : 2,
+            "y" : 0,
+            "size" : 5
+        }
+    ],
+    "edges" : [
+        {
+            "id" : "start",
+            "source" : "start",
+            "target" : "A"
+        },
+        {
+            "id" : "a-A",
+            "source" : "A",
+            "target" : "A"
+        },
+        {
+            "id" : "a-B",
+            "source" : "B",
+            "target" : "A"
+        },
+        {
+            "id" : "b-A",
+            "source" : "A",
+            "target" : "B"
+        },
+        {
+            "id" : "b-B",
+            "source" : "B",
+            "target" : "B"
+        }
+    ]
+}

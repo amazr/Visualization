@@ -25,28 +25,38 @@
     "edges" : [
         {
             "id" : "start",
+            "label" : "start",
             "source" : "start",
-            "target" : "A"
+            "target" : "A",
+            "type" : "arrow"
         },
         {
             "id" : "a-A",
+            "label" : "a",
             "source" : "A",
-            "target" : "A"
+            "target" : "A",
+            "type" : "curvedArrow"
         },
         {
             "id" : "a-B",
+            "label" : "a",
             "source" : "B",
-            "target" : "A"
+            "target" : "A",
+            "type" : "curvedArrow"
         },
         {
             "id" : "b-A",
+            "label" : "b",
             "source" : "A",
-            "target" : "B"
+            "target" : "B",
+            "type" : "curvedArrow"
         },
         {
             "id" : "b-B",
+            "label" : "b",
             "source" : "B",
-            "target" : "B"
+            "target" : "B",
+            "type" : "curvedArrow"
         }
     ]
 }

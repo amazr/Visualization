@@ -61,16 +61,20 @@ for i in data1['edges']:
         if (iLanguage == "start") & (jLanguage == "start"):
             combined['edges'].append({
                 "id" : "start",
+                "label" : "start",
                 "source" : "start",
-                "target" : i['target'] + j['target']
+                "target" : i['target'] + j['target'],
+                "type" : "arrow"
             })
             break
 
         if (iLanguage == jLanguage) & ((iLanguage != "start") | (jLanguage != "start")):
             combined['edges'].append({
                 "id" : iLanguage + "-" + i['source'] + j['source'],
+                "label" : iLanguage,
                 "source" : i['source'] + j['source'],
-                "target" : i['target'] + j['target']
+                "target" : i['target'] + j['target'],
+                "type" : "curvedArrow"
             })
 
 hasALink = False

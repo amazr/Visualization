@@ -2,6 +2,15 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0px;
+    top: 50px;
     left: 0px;
+}
+
+#input-window {
+    display:inline;
+}
+
+h3 {
+    width: 200px;
+    margin: 0px;
 }

@@ -5,7 +5,6 @@ let onFilePicked = function(event) {
   let input = event.target;
 
   let file = input.files[0];
-  console.log(file.name);
 
   let reader = new FileReader();
 

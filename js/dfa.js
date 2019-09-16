@@ -1,7 +1,5 @@
 let dfaParser = function(fileString) {
 
-    console.log(fileString);
-
     //Regex for finding keywords in the file
     let regex = /\b(\w*states\w*)\b/g;
     let statesLocation = fileString.search(regex);
@@ -92,5 +90,5 @@ let removeWhiteSpace = function(aString) {
 
 let getEqualRegex = function() {
     let equalEx = new RegExp(/\=/);
-    return equalEx;
+    return equalEx; 
 }

@@ -23,7 +23,21 @@
     float:left;
 }
 
+#input-window {
+    display: table;
+    width:100%;
+}
+
+.input-panes {
+    display: table-cell;
+    vertical-align:middle;
+    padding:8px;
+}
+
 h3 {
-    width: 200px;
-    margin: 0px;
+    margin:2px;
+}
+
+body {
+    margin:0;
 }

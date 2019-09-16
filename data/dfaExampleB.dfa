@@ -1,0 +1,8 @@
+states = A, B
+edges = input: 1, source: A, target: B
+        input: 2, source: A, target: A
+        input: 1, source: B, target: B
+        input: 2, source: B, target: A
+start = A
+final = B
+alphabet = 1, 2

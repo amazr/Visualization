@@ -75,7 +75,7 @@ let edgeParser = function(edgeString) {
 
     for (let i = 0; i < edgeStringAr.length - 1; i++) {
         let newObject = {
-            id : edgeSigmaAr[i] + edgeSourceAr[i] + edgeTargetAr[i],
+            id : edgeSigmaAr[i],
             source : edgeSourceAr[i],
             target : edgeTargetAr[i]
         };

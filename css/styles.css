@@ -1,13 +1,26 @@
-#cy {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 50px;
-    left: 0px;
+#cy1 {
+    width:50%;
+    height:50vh;
+    border-right: solid black 0.5px;
+    border-top: solid black 1px;
+    box-sizing: border-box;
+    float:left;
+}
+#cy2 {
+    width:50%;
+    height:50vh;   
+    border-left: solid black 0.5px;
+    border-top: solid black 1px;
+    box-sizing: border-box;
+    float:left;
 }
 
-#input-window {
-    display:inline;
+#cy3 {
+    width:100%;
+    height:50vh;   
+    border-top: solid black 1px;
+    box-sizing: border-box;
+    float:left;
 }
 
 h3 {

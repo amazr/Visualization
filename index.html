@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DFA | Visualization</title>
+        <script src="js/cytoscape.min.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+
+        <div id="input-window">
+            <h3>Upload file for DFA
+                <select id="render-window-selector">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </h3>
+            <input type='file' onchange='onFilePicked(event)'>
+            <button onclick='renderGraph(dfaObject)'>Render Uploaded File</button>
+        </div>
+
+        <div id="cy1"></div>
+        <div id="cy2"></div>
+        <div id="cy3"></div>
+
+        <script src="js/dfa.js"></script>
+        <script src="js/render.js"></script>
+        <script src="js/fileUpload.js"></script>
+    </body>
+</html>

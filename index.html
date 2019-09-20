@@ -8,12 +8,11 @@
     <body>
 
         <div id="input-window">
-            <div class="input-panes">
+            <div class="input-panes" id="first-pane">
                 <h3>Upload file for DFA
                     <select id="render-window-selector">
                         <option value="1">1</option>
                         <option value="2">2</option>
-                        <option value="3">3</option>
                     </select>
                 </h3>
                 <input type='file' onchange='onFilePicked(event)'>
@@ -22,7 +21,11 @@
                 <button class="rendering-buttons" onclick='renderGraph()'>Render Uploaded File</button>
             </div>
             <div class="input-panes">
-                <button class="rendering-buttons" onclick='combine()''>Join</button>
+                <select id="combination-selector">
+                        <option value="1">Union</option>
+                        <option value="2">Intersection</option>
+                </select>
+                <button class="rendering-buttons" onclick='combine()''>Combine</button>
             </div>
         </div>
 

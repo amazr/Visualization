@@ -1,16 +1,16 @@
 #cy1 {
     width:50%;
-    height:50vh;
-    border-right: solid black 0.5px;
-    border-top: solid black 1px;
+    height:35vh;
+    border-right: solid black 1px;
+    border-top: solid black 2px;
     box-sizing: border-box;
     float:left;
 }
 #cy2 {
     width:50%;
-    height:50vh;   
-    border-left: solid black 0.5px;
-    border-top: solid black 1px;
+    height:35vh;   
+    border-left: solid black 1px;
+    border-top: solid black 2px;
     box-sizing: border-box;
     float:left;
 }
@@ -18,7 +18,7 @@
 #cy3 {
     width:100%;
     height:50vh;   
-    border-top: solid black 1px;
+    border-top: solid black 2px;
     box-sizing: border-box;
     float:left;
 }
@@ -28,9 +28,15 @@
     width:100%;
 }
 
+#first-pane {
+    text-align: left;
+}
+
 .input-panes {
     display: table-cell;
+    text-align: center;
     vertical-align:middle;
+    width:33.33%;
     padding:8px;
 }
 

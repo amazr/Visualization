@@ -1,4 +1,4 @@
-let cytoArray = [];
+let dfaArray = [];
 
 let renderGraph = function() {
   let container_id = "cy" + document.getElementById("render-window-selector").value;
@@ -49,11 +49,11 @@ let renderCy = function(dfaObject, container_id) {
   layout.run();
 
   //This makes sure there are only two cytoscape objects to combine... for now
-  if (cytoArray.length > 2) {
-    cytoArray.shift();
+  if (dfaArray.length > 2) {
+    dfaArray.shift();
   }
   else {
-    cytoArray.push(cy);
+    dfaArray.push(dfaObject);
   }
   
 }

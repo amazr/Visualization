@@ -19,7 +19,7 @@ let combine = function() {
     if (combination_type == 1) {
         union(combinedDFA);
     }
-    console.log(combinedDFA);
+
     renderCy(combinedDFA, "cy3");
 }
 

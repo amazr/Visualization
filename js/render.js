@@ -6,13 +6,18 @@ let renderGraph = function() {
 }
 
 let renderCy = function(dfaObject, container_id) {
+
+  let nodes = createNodes(dfaObject);
+  let edges = createEdges(dfaObject, nodes);
+
   let cy = cytoscape({
     container: document.getElementById(container_id),
     elements: {
-      nodes: createNodes(dfaObject),
-      edges: createEdges(dfaObject)
+      nodes: nodes,
+      edges: edges
     }
   });
+
 
   let layout;
 
@@ -24,18 +29,31 @@ let renderCy = function(dfaObject, container_id) {
   else {
     layout = cy.layout({
       name: 'grid',
-      columns: 2
+      columns: 3
     });
   }
+
 
   //node inline style
   cy.style().selector('node').style({
     label: 'data(id)',
+    'background-color': '#FEFEFE',
+    'border-color' : '#454545',
+    'border-width': '2',
+    'text-valign': 'center',
+    'text-halign': 'center',
+    'font-weight':'bold'
   }).update();
 
-  cy.style().selector('node.start').style({
-    shape: 'diamond',
-    'background-color': 'red'
+  cy.style().selector('node.entryPoint').style({
+    'visibility': 'hidden',
+  }).update();
+
+  cy.style().selector('node.final').style({
+    'background-color': '#FEFEFE',
+    'border-color' : '#454545',
+    'border-width': '5',
+    'border-style': 'double'
   }).update();
 
   //edge inline style
@@ -60,7 +78,10 @@ let renderCy = function(dfaObject, container_id) {
 
 let createNodes = function(dfaObject) {
 
-  let nodes = [];
+  let nodes = [{
+    data: {id: "entryPoint"},
+    classes: "entryPoint"
+  }];
   //work on adding a cyto-class for setting the finals class
   for (let i = 0; i < dfaObject.states.length; i++) {
     let node = formatData(dfaObject.states[i]);
@@ -68,6 +89,12 @@ let createNodes = function(dfaObject) {
       nodes.push({
         data: {id: node},
         classes: "start"
+      });
+    }
+    else if (formatData(dfaObject.finals).includes(node)) {
+      nodes.push({
+        data: {id: node},
+        classes: "final"
       });
     }
     else {
@@ -80,7 +107,7 @@ let createNodes = function(dfaObject) {
   return nodes;
 }
 
-let createEdges = function(dfaObject) {
+let createEdges = function(dfaObject, nodes) {
 
   let edges = [];
 
@@ -93,7 +120,25 @@ let createEdges = function(dfaObject) {
       data: {id: (edgeID + edgeSource + edgeTarget), source: edgeSource, target: edgeTarget, name: edgeID}
     });
   }
-  
+
+  edges = createStartEdges(edges, nodes);
+
+  return edges;
+}
+
+let createStartEdges = function(edges, nodes) {
+
+  let startingNode = "";
+  for (let key in nodes) {
+    if (nodes[key].classes == "start") {
+      startingNode = nodes[key].data.id;
+    }
+  }
+
+  edges.push({
+    data: {id: "start", source: "entryPoint", target: startingNode, name: "start"}
+  });
+
   return edges;
 }
 

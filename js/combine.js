@@ -19,6 +19,9 @@ let combine = function() {
     if (combination_type == 1) {
         union(combinedDFA);
     }
+    else if (combination_type == 2) {
+        intersection(combinedDFA);
+    }
 
     renderCy(combinedDFA, "cy3");
 }
@@ -29,6 +32,14 @@ let union = function(combinedDFA) {
     combineEdges(combinedDFA);
     combineAlphabets(combinedDFA);
     unionFinals(combinedDFA);
+}
+
+let intersection = function(combinedDFA) {
+    unionStart(combinedDFA);
+    combineStates(combinedDFA);
+    combineEdges(combinedDFA);
+    combineAlphabets(combinedDFA);
+    intersectionFinals(combinedDFA);
 }
 
 let unionFinals = function(combinedDFA) {
@@ -44,6 +55,20 @@ let unionFinals = function(combinedDFA) {
             if (combinedDFA.states[i].includes(formatData(dfaArray[0].finals[j]))) {
                 if (!combinedDFA.finals.includes(combinedDFA.states[i])) {
                     combinedDFA.finals.push(combinedDFA.states[i])
+                }
+            }
+        }
+    }
+}
+
+//If the final states from the two DFA intersect. If final states in m1 = {B}, m2 = {B}, then finals in mI = {BB}, not {AB, BA, BB} like union
+let intersectionFinals = function(combinedDFA) {
+    for (let i = 0; i < combinedDFA.states.length; i++) {
+        for (let j = 0; j < dfaArray[0].finals.length; j++) {
+            for (let k = 0; k < dfaArray[1].finals.length; k++) {
+                let checkForSecond = combinedDFA.states[i].split(formatData(dfaArray[0].finals[j]));
+                if (checkForSecond.includes(formatData(dfaArray[1].finals[k]))) {
+                    combinedDFA.finals.push(combinedDFA.states[i]);
                 }
             }
         }

@@ -16,6 +16,7 @@ let combine = function() {
         "alphabet": alphabet
     };
 
+    //These algorithms should probably be seperated out into their own files.
     if (combination_type == 1) {
         union(combinedDFA);
     }

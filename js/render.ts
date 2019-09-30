@@ -1,7 +1,10 @@
+/// <reference path="fileUpload.ts" />
+declare var cytoscape: any;
+
 let dfaArray = [];
 
 let renderGraph = function () {
-  let container_id = "cy" + document.getElementById("render-window-selector").value;
+  let container_id = "cy" + (<HTMLInputElement>document.getElementById("render-window-selector")).value;
   renderCy(dfaObject, container_id);
 }
 
@@ -82,27 +85,35 @@ let createNodes = function (dfaObject) {
     data: { id: "entryPoint" },
     classes: "entryPoint"
   }];
-  //work on adding a cyto-class for setting the finals class
-  for (let i = 0; i < dfaObject.states.length; i++) {
-    let node = formatData(dfaObject.states[i]);
-    if (node == formatData(dfaObject.start)) {
+
+  let regular: boolean = true;
+
+  dfaObject.states.forEach(function(state) {
+    dfaObject.initial.forEach(function(initial) {
+      if (state == initial) {
+        regular = false;
+        nodes.push({
+          data: { id: state },
+          classes: "start"
+        });
+      }
+    });
+    dfaObject.accepting.forEach(function(accepting) {
+      if (state == accepting) {
+        regular = false;
+        nodes.push({
+          data: { id: state },
+          classes: "final"
+        });
+      }
+    })
+    if (regular) {
       nodes.push({
-        data: { id: node },
-        classes: "start"
+        data: { id: state },
+        classes:"regular"
       });
     }
-    else if (formatData(dfaObject.finals).includes(node)) {
-      nodes.push({
-        data: { id: node },
-        classes: "final"
-      });
-    }
-    else {
-      nodes.push({
-        data: { id: node }
-      });
-    }
-  }
+  });
 
   return nodes;
 }
@@ -111,17 +122,15 @@ let createEdges = function (dfa, nodes) {
 
   let edges = [];
 
-  for (let i = 0; i < dfaObject.edges.length; i++) {
-    let edgeID = formatData(dfaObject.edges[i].id);
-    let edgeSource = formatData(dfaObject.edges[i].source);
-    let edgeTarget = formatData(dfaObject.edges[i].target);
-
+  dfaObject.transitions.forEach(function(edge) {
     edges.push({
-      data: { id: (edgeID + edgeSource + edgeTarget), source: edgeSource, target: edgeTarget, name: edgeID }
+      data: { id: (edge.id + edge.source + edge.target), source: edge.source, target: edge.target, name: edge.id }
     });
-  }
 
-  edges = createStartEdges(edges, nodes);
+  });
+
+  /*  TODO
+  edges = createStartEdges(edges, nodes);*/
 
   return edges;
 }
@@ -140,11 +149,4 @@ let createStartEdges = function (edges, nodes) {
   });
 
   return edges;
-}
-
-//This function just properly formats the data passed from the object created by dfa.js
-//For some reason it was coming in with some weird values. If you try and create the cytoscape graph
-//with values directly from the object it fails in a really weird way... 
-let formatData = function (to_format) {
-  return JSON.stringify(to_format).replace(/\\./g, '').replace(/\"/g, '');
 }

@@ -1,3 +1,4 @@
+
 interface Edge {
     id: String;
     source: String;
@@ -45,10 +46,20 @@ let dfaParser = function (fileString): Dfa {
         alphabet: alphabet
     };
 
+    //This clears the empty transition added by the map function, OR any transitions created with no id
+    dfa.transitions.forEach(function(toDelete) {
+        if (toDelete.id == "") {
+            dfa.transitions.delete(toDelete);
+        }
+    });
+
     return dfa;
 };
 
 const regularParser = function (stateString: String): Set<String> {
+
+    //This line makes it so that we don't have to call the json formatting stuff later down the line.
+    stateString = stringFormat(stateString);
 
     stateString = removeWhiteSpace(stateString);
     const equalEx = getEqualRegex();
@@ -61,16 +72,19 @@ const regularParser = function (stateString: String): Set<String> {
 
 let edgeParser = function (edgeString: String): Set<Edge> {
 
+    //This line makes it so that we don't have to call the json formatting stuff later down the line.
+    edgeString = stringFormat(edgeString);
+
     edgeString = removeWhiteSpace(edgeString);
     let equalEx = getEqualRegex();
 
     edgeString = edgeString.substring(edgeString.search(equalEx) + 1, edgeString.length);
-
+    
     return new Set(
-        edgeString.split("\n").map(
+        edgeString.split("input").map(
             e => <Edge>{
                 id: e.substring(e.indexOf(':') + 1, e.indexOf(',')),
-                source: e.substring(e.indexOf(':', e.indexOf(':') + 1), e.lastIndexOf(',')),
+                source: e.substring(e.indexOf(':', e.indexOf(':') + 1) + 1, e.lastIndexOf(',')),
                 target: e.substring(e.lastIndexOf(':') + 1)
             }
         )
@@ -84,4 +98,8 @@ let removeWhiteSpace = function (aString: String): String {
 let getEqualRegex = function (): RegExp {
     let equalEx = new RegExp(/\=/);
     return equalEx;
+};
+
+let stringFormat = function (to_format: String): String {
+    return JSON.stringify(to_format).replace(/\\./g, '').replace(/\"/g, '');
 };

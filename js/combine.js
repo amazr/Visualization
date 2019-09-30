@@ -1,3 +1,5 @@
+
+
 let combine = function() {
 
     let combination_type = document.getElementById("combination-selector").value;
@@ -44,36 +46,12 @@ let intersection = function(combinedDFA) {
 }
 
 let unionFinals = function(combinedDFA) {
-    for (let i = 0; i < combinedDFA.states.length; i++) {
-        for (let j = 0; j < dfaArray[0].finals.length; j++) {
-            if (combinedDFA.states[i].includes(formatData(dfaArray[0].finals[j]))) {
-                if (!combinedDFA.finals.includes(combinedDFA.states[i])) {
-                    combinedDFA.finals.push(combinedDFA.states[i])
-                }
-            }
-        }
-        for (let j = 0; j < dfaArray[1].finals.length; j++) {
-            if (combinedDFA.states[i].includes(formatData(dfaArray[0].finals[j]))) {
-                if (!combinedDFA.finals.includes(combinedDFA.states[i])) {
-                    combinedDFA.finals.push(combinedDFA.states[i])
-                }
-            }
-        }
-    }
+    combinedDFA.finals = combinedDFA.states.filter(q => dfaArray[0].finals.contains(q[0]) || dfaArray[1].finals.contains(q[1]));
 }
 
 //If the final states from the two DFA intersect. If final states in m1 = {B}, m2 = {B}, then finals in mI = {BB}, not {AB, BA, BB} like union
 let intersectionFinals = function(combinedDFA) {
-    for (let i = 0; i < combinedDFA.states.length; i++) {
-        for (let j = 0; j < dfaArray[0].finals.length; j++) {
-            for (let k = 0; k < dfaArray[1].finals.length; k++) {
-                let checkForSecond = combinedDFA.states[i].split(formatData(dfaArray[0].finals[j]));
-                if (checkForSecond.includes(formatData(dfaArray[1].finals[k]))) {
-                    combinedDFA.finals.push(combinedDFA.states[i]);
-                }
-            }
-        }
-    }
+    combinedDFA.finals = combinedDFA.states.filter(q => dfaArray[0].finals.contains(q[0]) && dfaArray[1].finals.contains(q[1]));
 }
 
 let combineAlphabets = function(combinedDFA) {
@@ -112,7 +90,10 @@ let combineEdges = function(combinedDFA) {
             }
         }
     }
+    deleteUnreachableStates(combinedDFA);
+}
 
+let deleteUnreachableStates = function(combinedDFA) {
     let dontDeleteTheseStates = [combinedDFA.start];
     for (let i = 0; i < combinedDFA.states.length; i++) {
         for (let j = 0; j < combinedDFA.edges.length; j++) {

@@ -2,7 +2,6 @@ var fileOutput;
 var dfaObject;
 var onFilePicked = function (event) {
     var input = event.target;
-    var file = input.files[0];
     var reader = new FileReader();
     reader.readAsText(input.files[0]);
     reader.onload = function () {

@@ -7,6 +7,8 @@
     "files": [
         "fileUpload.ts",
         "dfa.ts",
-        "render.ts"
+        "render.ts",
+        "combine.ts",
+        "union.ts"
     ]
 }

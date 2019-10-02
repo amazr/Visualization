@@ -118,7 +118,7 @@ let createNodes = function (dfaObject) {
   return nodes;
 }
 
-let createEdges = function (dfa, nodes) {
+let createEdges = function (dfaObject, nodes) {
 
   let edges = [];
 
@@ -129,8 +129,7 @@ let createEdges = function (dfa, nodes) {
 
   });
 
-  /*  TODO
-  edges = createStartEdges(edges, nodes);*/
+  edges = createStartEdges(edges, nodes);
 
   return edges;
 }

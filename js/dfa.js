@@ -34,6 +34,7 @@ var dfaParser = function (fileString) {
     return dfa;
 };
 var regularParser = function (stateString) {
+    //This line makes it so that we don't have to call the json formatting stuff later down the line.
     stateString = stringFormat(stateString);
     stateString = removeWhiteSpace(stateString);
     var equalEx = getEqualRegex();
@@ -42,6 +43,7 @@ var regularParser = function (stateString) {
     return states;
 };
 var edgeParser = function (edgeString) {
+    //This line makes it so that we don't have to call the json formatting stuff later down the line.
     edgeString = stringFormat(edgeString);
     edgeString = removeWhiteSpace(edgeString);
     var equalEx = getEqualRegex();

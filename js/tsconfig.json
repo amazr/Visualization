@@ -1,0 +1,14 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "esnext",
+        "lib": ["esnext", "dom"]
+    },
+    "files": [
+        "fileUpload.ts",
+        "dfa.ts",
+        "render.ts",
+        "combine.ts",
+        "union.ts"
+    ]
+}

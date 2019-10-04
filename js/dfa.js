@@ -1,94 +1,66 @@
-let dfaParser = function(fileString) {
-
+;
+;
+var dfaParser = function (fileString) {
     //Regex for finding keywords in the file
-    let regex = /\b(\w*states\w*)\b/g;
-    let statesLocation = fileString.search(regex);
-    
+    var regex = /\b(\w*states\w*)\b/g;
+    var statesLocation = fileString.search(regex);
     regex = /\b(\w*edges\w*)\b/g;
-    let edgesLocation = fileString.search(regex);
-
+    var edgesLocation = fileString.search(regex);
     regex = /\b(\w*start\w*)\b/g;
-    let startLocation = fileString.search(regex);
-
+    var startLocation = fileString.search(regex);
     regex = /\b(\w*final\w*)\b/g;
-    let finalsLocation = fileString.search(regex);
-
+    var finalsLocation = fileString.search(regex);
     regex = /\b(\w*alphabet\w*)\b/g;
-    let alphabetLocation = fileString.search(regex);
-
+    var alphabetLocation = fileString.search(regex);
     //these functions will return a js interactable object/array/variable
-    let states = regularParser(fileString.substring(statesLocation, edgesLocation));
-    let edges = edgeParser(fileString.substring(edgesLocation, startLocation));
-    let starts = regularParser(fileString.substring(startLocation, finalsLocation));
-    let finals = regularParser(fileString.substring(finalsLocation, alphabetLocation));
-    let alphabet = regularParser(fileString.substring(alphabetLocation, fileString.length - 1));
-
-    let dfaObject = {
-        "states": states,
-        "edges": edges,
-        "start": starts[0],
-        "finals": finals,
-        "alphabet": alphabet
+    var states = regularParser(fileString.substring(statesLocation, edgesLocation));
+    var edges = edgeParser(fileString.substring(edgesLocation, startLocation));
+    var start = regularParser(fileString.substring(startLocation, finalsLocation));
+    var finals = regularParser(fileString.substring(finalsLocation, alphabetLocation));
+    var alphabet = regularParser(fileString.substring(alphabetLocation, fileString.length - 1));
+    var dfa = {
+        states: states,
+        transitions: edges,
+        initial: start,
+        accepting: finals,
+        alphabet: alphabet
     };
-
-    return dfaObject;
-}
-
-let regularParser = function (stateString) {
-    let states = [];
-
+    //This clears the empty transition added by the map function, OR any transitions created with no id
+    dfa.transitions.forEach(function (toDelete) {
+        if (toDelete.id == "") {
+            dfa.transitions["delete"](toDelete);
+        }
+    });
+    return dfa;
+};
+var regularParser = function (stateString) {
+    //This line makes it so that we don't have to call the json formatting stuff later down the line.
+    stateString = stringFormat(stateString);
     stateString = removeWhiteSpace(stateString);
-    let equalEx = getEqualRegex();
-
-    let tempString = stateString.substring(stateString.search(equalEx) + 1, stateString.length);
-    states = tempString.split(",");
-
+    var equalEx = getEqualRegex();
+    var tempString = stateString.substring(stateString.search(equalEx) + 1, stateString.length);
+    var states = new Set(tempString.split(","));
     return states;
-}
-
-let edgeParser = function(edgeString) {
-
+};
+var edgeParser = function (edgeString) {
+    //This line makes it so that we don't have to call the json formatting stuff later down the line.
+    edgeString = stringFormat(edgeString);
     edgeString = removeWhiteSpace(edgeString);
-    let equalEx = getEqualRegex();
-
-    let tempEdgeString = edgeString.substring(edgeString.search(equalEx) + 1, edgeString.length);
-    let edgeStringAr = tempEdgeString.split("\n");
-    let edgeSigmaAr = [];
-    let edgeSourceAr = [];
-    let edgeTargetAr = [];
-    let edgeObjectAr = [];
-
-    for (let i = 0; i < edgeStringAr.length - 1; i++) {
-        let aSingleEdge = edgeStringAr[i].split(",");
-
-        let propertyAndValue = aSingleEdge[0].split(":");
-        edgeSigmaAr.push(propertyAndValue[1]);
-
-        propertyAndValue = aSingleEdge[1].split(":");
-        edgeSourceAr.push(propertyAndValue[1]);
-
-        propertyAndValue = aSingleEdge[2].split(":");
-        edgeTargetAr.push(propertyAndValue[1]);
-    }
-
-    for (let i = 0; i < edgeStringAr.length - 1; i++) {
-        let newObject = {
-            id : edgeSigmaAr[i],
-            source : edgeSourceAr[i],
-            target : edgeTargetAr[i]
-        };
-
-        edgeObjectAr.push(newObject);
-    }
-
-    return(edgeObjectAr);
-}
-
-let removeWhiteSpace = function(aString) {
+    var equalEx = getEqualRegex();
+    edgeString = edgeString.substring(edgeString.search(equalEx) + 1, edgeString.length);
+    return new Set(edgeString.split("input").map(function (e) { return ({
+        id: e.substring(e.indexOf(':') + 1, e.indexOf(',')),
+        source: e.substring(e.indexOf(':', e.indexOf(':') + 1) + 1, e.lastIndexOf(',')),
+        target: e.substring(e.lastIndexOf(':') + 1)
+    }); }));
+};
+var removeWhiteSpace = function (aString) {
     return aString.replace(/ /g, "");
-}
-
-let getEqualRegex = function() {
-    let equalEx = new RegExp(/\=/);
-    return equalEx; 
-}
+};
+var getEqualRegex = function () {
+    var equalEx = new RegExp(/\=/);
+    return equalEx;
+};
+var stringFormat = function (to_format) {
+    return JSON.stringify(to_format).replace(/\\./g, '').replace(/\"/g, '');
+};

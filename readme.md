@@ -11,6 +11,8 @@
 6. NFA determinization
 7. [2DFA](https://en.wikipedia.org/wiki/Two-way_finite_automaton) to DFA
 8. [AFA](https://en.wikipedia.org/wiki/Alternating_finite_automaton) to NFA
+9. Test if a word is accepted by an NFA/DFA. Give a way to step through the run to see how it executes.
+10. Add a cleanup function to remove unreachable nodes.
 
 ### [Infinite Strings](https://en.wikipedia.org/wiki/Omega-regular_language)
 1. NBuchi to DMuller
@@ -27,4 +29,5 @@
 8. DSST/NSST composition
 
 ### Aesthetics
-1. Change graph style to match commonly used conventions.
+1. resizing windows.
+2. Have a separate upload form for each input machine.
